@@ -17,8 +17,8 @@ namespace FanoutHelperAPIV1
 
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
+            services.AddHealthChecks();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -33,6 +33,7 @@ namespace FanoutHelperAPIV1
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                app.UseHealthChecks("/health");
             });
         }
     }
