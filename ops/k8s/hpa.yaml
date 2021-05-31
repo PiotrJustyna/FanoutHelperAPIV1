@@ -1,0 +1,21 @@
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: fanout-helper
+  namespace: fanout
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: fanout-helper
+  minReplicas: 1
+  maxReplicas: 10
+  metrics:
+    - type: Object
+      object:
+        metricName: request_per_second
+        averageValue: 100
+        target:
+          kind: Namespace
+          name: fanout
+        targetValue: 100
